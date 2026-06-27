@@ -8,7 +8,7 @@ const { status } = require('minecraft-server-util');
 const SERVER_IP = 'Territorio_LOL.aternos.me';
 const SERVER_PORT = 22502;
 
-let GROUP_ID = '';
+let GROUP_ID = 'Minecraft para la racha';
 let estadoAnterior = null;
 
 async function iniciarBot() {
