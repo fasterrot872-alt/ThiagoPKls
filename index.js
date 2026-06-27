@@ -8,9 +8,7 @@ const { status } = require('minecraft-server-util');
 const SERVER_IP = 'Territorio_LOL.aternos.me';
 const SERVER_PORT = 22502;
 
-// Déjalo vacío por ahora. Luego pondremos el ID del grupo.
 let GROUP_ID = '';
-
 let estadoAnterior = null;
 
 async function iniciarBot() {
@@ -22,16 +20,22 @@ async function iniciarBot() {
 
   sock.ev.on('creds.update', saveCreds);
 
-  // Generar código de vinculación
-  if (!state.creds.registered) {
-    const codigo = await sock.requestPairingCode('51960367134');
-    console.log('Código de vinculación:', codigo);
-  }
+  sock.ev.on('connection.update', async ({ connection }) => {
+    if (connection === 'open') {
+      console.log('✅ WhatsApp conectado');
 
-  console.log('Bot iniciado');
+      if (!state.creds.registered) {
+        try {
+          const codigo = await sock.requestPairingCode('51960367134');
+          console.log('Código de vinculación:', codigo);
+        } catch (err) {
+          console.error('Error al generar el código:', err);
+        }
+      }
+    }
+  });
 
   setInterval(async () => {
-    // No enviar mensajes hasta tener el ID del grupo
     if (!GROUP_ID) return;
 
     try {
