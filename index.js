@@ -1,4 +1,9 @@
-const sock = makeWASocket({
+const {
+  default: makeWASocket,
+  useMultiFileAuthState
+} = require('@whiskeysockets/baileys');
+
+const { status } = require('minecraft-server-util');const sock = makeWASocket({
   auth: state
 });
 
